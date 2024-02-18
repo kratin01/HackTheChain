@@ -9,6 +9,7 @@ import iconimg from "../../assest/aboutPhotos/user.png"
 const About = () => {
   return (
     <div >
+      <h1 className="text-3xl font-bold text-center">About</h1>
       <div className="flex justify-around my-24">
         <Card name="Dr. Anand" details="Warden Block A Boys Hostel" img={anandimg} number="9549655278" email="anand.ece@iiitkota.ac.in"/>
         <Card name="Dr. Amit" details="Warden Block B Boys Hostel" img={amitimg} number="9872345670" email="amit@iiitkota.ac.in"/>
