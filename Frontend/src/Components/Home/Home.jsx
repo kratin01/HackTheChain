@@ -1,10 +1,14 @@
-const Home = () => {
-  return(
-   <>
-      <div>
+import Banner from "./Banner";
 
-      </div>
-   </>
+
+const Home = () => {
+  return (
+    
+    
+    <Banner/>
+    
+    
+    
   );
 };
 

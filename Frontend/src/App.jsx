@@ -5,15 +5,19 @@ import NavBar from "./Components/NavBar";
 
 function App() {
   return (
-    <>
+    
+      
       <div>
+
+
         <NavBar />
         <div className="min-h-screen">
           <Outlet />
         </div>
         {/* <MyFooter /> */}
       </div>
-    </>
+    
+    
   );
 }
 

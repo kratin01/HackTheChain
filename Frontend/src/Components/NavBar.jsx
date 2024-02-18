@@ -8,6 +8,8 @@ const Navbar = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isSticky, setSticky] = useState(false);
 
+  // const user=Login();
+  const user = localStorage.getItem("accessToken");
   //Toggle Menu
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen); //basically if isMenuOpen is true, set it to false and vice versa
@@ -36,9 +38,6 @@ const Navbar = () => {
     { link: "Home", path: "/" },
     { link: "About", path: "/about" },
     { link: "Contact", path: "/contact" },
-    { link: "Shop", path: "/shop" },
-    { link: "Blog", path: "/blog" },
-   
   ];
 
   return (
@@ -52,7 +51,7 @@ const Navbar = () => {
           {/* Insert Logo */}
           <Link
             to="/"
-            className=" text-2xl font-bold text-blue-700 flex items-center"
+            className=" text-2xl font-bold text-[#5863C4] flex items-center"
           >
             <FaBlog className=" inline-block" /> logo
           </Link>
@@ -63,7 +62,7 @@ const Navbar = () => {
               <Link
                 key={path}
                 to={path}
-                className=" block text-base text-black uppercase cursor-pointer hover:text-blue-700"
+                className=" block text-base text-black uppercase cursor-pointer hover:text-[#5863C4]"
               >
                 {link}
               </Link>
@@ -75,6 +74,34 @@ const Navbar = () => {
           <div className=" space-x-12 hidden lg:flex items-center ">
             <button>
               <FaBarsStaggered className="w-5 hover:text-blue-700 " />
+            </button>
+            <button>
+              {user ? (
+                <Link
+                  to="/profile"
+                  className="bg-[#5863C4] text-white px-4 py-2 rounded-md"
+                >
+                  Profile
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className="bg-[#5863C4] text-white px-4 py-2 rounded-md"
+                >
+                  Login
+                </Link>
+              )}
+              `
+              {user ? (
+                <Link
+                  to="/logout"
+                  className="px-4 underline text-blue-700 hover:text-black"
+                >
+                  Logout
+                </Link>
+              ) : (
+                ""
+              )}
             </button>
           </div>
 
