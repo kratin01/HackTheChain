@@ -1,35 +1,64 @@
-// import {useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 // import { AuthContext } from "../contects/Authprovider";
 // import googleimg from "../assets/google-logo.svg";
 
 const Login = () => {
-  const handleLogIn = (e) => {
+  const [error, setError] = useState("");
+  const handleLogIn = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const email = form.email.value;
+    const username = form.username.value;
     const password = form.password.value;
 
-    const user = { email, password };
+    // const user = { username, password };
 
-    fetch("http://localhost:8000/users/login", {
-      method: "POST",
-      body: JSON.stringify(user),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) {
-          alert("Invalid Email or Password(^_^)");
-        } else {
-          localStorage.setItem("token", data.token);
-          window.location.href = "/";
-        }
-      }).catch((error) => {
-        console.error("Error during login:", error);
+    // fetch("http://localhost:8000/users/login", {
+    //   method: "POST",
+    //   body: JSON.stringify(user),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     if (data.error) {
+    //       // alert("Invalid Email or Password(^_^)");
+    //       setError("Invalid Email or Password(^_^)");
+    //     } else {
+    //       localStorage.setItem("token", data.token);
+    //       window.location.href = "/";
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error during login:", error);
+    //   });
+
+    try {
+      const response = await fetch("http://localhost:8000/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
       });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+
+      // Login successful, handle tokens and user data
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      // Redirect to dashboard or any other page
+      window.location.href = "/";
+    } catch (error) {
+      // Handle error, show error message to the user
+      console.error("Error during login:", error.message);
+      setError("Invalid username or password (^_^)"); // Set error state with the message
+    }
   };
 
   return (
@@ -48,11 +77,11 @@ const Login = () => {
               >
                 <div className="relative">
                   <input
-                    id="email"
-                    name="email"
+                    id="username"
+                    name="username"
                     type="text"
                     className="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-rose-600"
-                    placeholder="Email address"
+                    placeholder="Username"
                   />
                 </div>
                 <div className="relative">
@@ -64,12 +93,12 @@ const Login = () => {
                     placeholder="Password"
                   />
                 </div>
+                {error && <p className="text-red-500">{error}</p>}
 
-                {/* {error ? "Invalid Email or Password(^_^)" : " "} */}
                 <p>
                   If you dont have an account please{" "}
                   <Link to={"/sign-up"} className="text-blue-700 underline">
-                    Signup
+                    Register
                   </Link>{" "}
                   here..!!
                 </p>

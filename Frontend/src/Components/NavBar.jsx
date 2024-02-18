@@ -9,7 +9,7 @@ const Navbar = () => {
   const [isSticky, setSticky] = useState(false);
 
   // const user=Login();
-  const user = localStorage.getItem("token");
+  const user = localStorage.getItem("accessToken");
   //Toggle Menu
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen); //basically if isMenuOpen is true, set it to false and vice versa

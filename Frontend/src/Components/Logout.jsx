@@ -4,7 +4,7 @@ class LogoutButton extends React.Component {
   handleLogout = async () => {
     try {
       // Remove JWT token from local storage
-      localStorage.removeItem("token");
+      localStorage.removeItem("accessToken");
       window.location.href = "/";
 
       // Make a request to your backend to logout
